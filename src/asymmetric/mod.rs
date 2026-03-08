@@ -45,6 +45,9 @@ impl RSAWrapper {
     /// Generates an RSA key pair based of parameter sent in 1024, 2048, and 4096 are supported.
     #[wasm_bindgen(js_name = generateRsaKeys)]
     pub fn generate_rsa_keys(&self, key_size: usize) -> RSAKeyPair {
+        if key_size != 1024 && key_size != 2048 && key_size != 4096 {
+            panic!("Invalid key size. Supported key sizes are 1024, 2048, and 4096.");
+        }
         CASRSA::generate_rsa_keys(key_size).into()
     }
 
