@@ -1,16 +1,16 @@
-import init, { RSAWrapper } from "./pkg/cas_wasm.js";
+import init, { ZTSDWrapper } from "./pkg/cas_wasm.js";
 
 async function run() {
   const output = document.getElementById("output");
   try {
     await init();
-    const rsaWrapper = new RSAWrapper();
-    console.log(rsaWrapper);
-    const keyPair = rsaWrapper.generateRsaKeys(1024);
-    const message = Array.from(new TextEncoder().encode("Hello, World!"));
-    const signature = rsaWrapper.sign(keyPair.privateKey, message);
-    const isValid = rsaWrapper.verify(keyPair.publicKey, message, signature);
-    output.textContent = `Signature valid: ${isValid}`;
+    const ztsdWrapper = new ZTSDWrapper();
+    console.log(ztsdWrapper);
+    const dataToCompress = Array.from(new TextEncoder().encode("Hello, World! lets compress this data"));
+    const compressedData = ztsdWrapper.compress(dataToCompress, 3);
+    output.textContent = `Compressed data: ${compressedData}`;
+    console.log(dataToCompress.length > compressedData.length ? "Compression successful!" : "Compression failed.");
+    
   } catch (err) {
     output.textContent = `error: ${err}`;
   }
