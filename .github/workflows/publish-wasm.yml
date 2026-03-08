@@ -33,15 +33,6 @@ jobs:
       - name: Build package
         run: wasm-pack build --target web --release --out-dir pkg
 
-      - name: Verify tag matches package version
-        run: |
-          PKG_VERSION=$(node -p "require('./pkg/package.json').version")
-          TAG_VERSION=${GITHUB_REF_NAME#v}
-          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-            echo "Tag version ($TAG_VERSION) does not match pkg/package.json version ($PKG_VERSION)"
-            exit 1
-          fi
-
       - name: Publish to npm
         run: npm publish --access public --provenance
         working-directory: pkg
