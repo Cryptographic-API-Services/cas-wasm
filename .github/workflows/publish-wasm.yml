@@ -34,7 +34,7 @@ jobs:
         run: wasm-pack build --target web --release --out-dir pkg
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: npm publish --access public
         working-directory: pkg
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
